@@ -18,11 +18,30 @@ if st.checkbox("Show Raw Data"):
 
 # Sidebar Filters
 st.sidebar.header("Filter Options")
+
+# Gender Filter
 gender = st.sidebar.selectbox("Select Gender", options=df["Sex"].unique())
-pclass = st.sidebar.selectbox("Select Passenger Class", options=df["Pclass"].unique())
+
+# Passenger Class Filter
+pclass = st.sidebar.selectbox("Select Passenger Class", options=sorted(df["Pclass"].unique()))
+
+# Fare Range Filter
+fare_min = float(df["Fare"].min())
+fare_max = float(df["Fare"].max())
+fare_range = st.sidebar.slider(
+    "Select Fare Range",
+    min_value=round(fare_min, 2),
+    max_value=round(fare_max, 2),
+    value=(round(fare_min, 2), round(fare_max, 2))
+)
 
 # Apply filters
-filtered_df = df[(df["Sex"] == gender) & (df["Pclass"] == pclass)]
+filtered_df = df[
+    (df["Sex"] == gender) &
+    (df["Pclass"] == pclass) &
+    (df["Fare"] >= fare_range[0]) &
+    (df["Fare"] <= fare_range[1])
+]
 
 st.subheader("Filtered Data Preview")
 st.write(filtered_df.head())
