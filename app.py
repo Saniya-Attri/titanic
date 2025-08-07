@@ -2,6 +2,22 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+# Titanic Background Image (Full Page)
+page_bg_img = '''
+<style>
+[data-testid="stAppViewContainer"] {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/f/fd/RMS_Titanic_3.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+[data-testid="stHeader"], [data-testid="stToolbar"] {
+    background: rgba(0,0,0,0);
+}
+</style>
+'''
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Page Config
 st.set_page_config(page_title="Titanic EDA Dashboard", layout="wide")
@@ -117,3 +133,4 @@ with col6:
 # Footer
 st.markdown("---")
 st.markdown("Created with ❤️ using Streamlit | Titanic Dataset")
+
