@@ -27,47 +27,62 @@ filtered_df = df[(df["Sex"] == gender) & (df["Pclass"] == pclass)]
 st.subheader("Filtered Data Preview")
 st.write(filtered_df.head())
 
-# 1. Survival Count by Gender
-st.subheader("1. Survival Count by Gender")
-fig1, ax1 = plt.subplots()
-sns.countplot(data=filtered_df, x="Survived", hue="Sex", ax=ax1)
-ax1.set_title("Survival Distribution by Gender")
-st.pyplot(fig1)
+# === Row 1: Survival by Gender and by Class ===
+st.subheader("1. Survival Analysis")
 
-# 2. Survival Rate by Passenger Class
-st.subheader("2. Survival Count by Passenger Class")
-fig2, ax2 = plt.subplots()
-sns.countplot(data=df, x="Pclass", hue="Survived", ax=ax2)
-ax2.set_title("Survival by Passenger Class")
-st.pyplot(fig2)
+col1, col2 = st.columns(2)
 
-# 3. Age Distribution
-st.subheader("3. Age Distribution")
-fig3, ax3 = plt.subplots()
-sns.histplot(data=df, x="Age", kde=True, bins=30, ax=ax3)
-ax3.set_title("Distribution of Passenger Ages")
-st.pyplot(fig3)
+with col1:
+    fig1, ax1 = plt.subplots()
+    fig1.set_size_inches(5, 3)
+    sns.countplot(data=filtered_df, x="Survived", hue="Sex", ax=ax1)
+    ax1.set_title("Survival by Gender")
+    st.pyplot(fig1)
 
-# 4. Fare Distribution by Class
-st.subheader("4. Fare Distribution by Class")
-fig4, ax4 = plt.subplots()
-sns.boxplot(data=df, x="Pclass", y="Fare", ax=ax4)
-ax4.set_title("Fare Distribution across Passenger Classes")
-st.pyplot(fig4)
+with col2:
+    fig2, ax2 = plt.subplots()
+    fig2.set_size_inches(5, 3)
+    sns.countplot(data=df, x="Pclass", hue="Survived", ax=ax2)
+    ax2.set_title("Survival by Class")
+    st.pyplot(fig2)
 
-# 5. Survival Rate by Age and Gender
-st.subheader("5. Survival by Age and Gender")
-fig5, ax5 = plt.subplots()
-sns.kdeplot(data=df[df["Survived"] == 1], x="Age", hue="Sex", fill=True, ax=ax5)
-ax5.set_title("Survivors by Age and Gender")
-st.pyplot(fig5)
+# === Row 2: Age and Fare Distribution ===
+st.subheader("2. Distribution Plots")
 
-# 6. Heatmap of Correlations
-st.subheader("6. Correlation Heatmap")
-fig6, ax6 = plt.subplots()
-sns.heatmap(df.corr(numeric_only=True), annot=True, cmap="coolwarm", ax=ax6)
-ax6.set_title("Feature Correlation Matrix")
-st.pyplot(fig6)
+col3, col4 = st.columns(2)
+
+with col3:
+    fig3, ax3 = plt.subplots()
+    fig3.set_size_inches(5, 3)
+    sns.histplot(data=df, x="Age", kde=True, bins=30, ax=ax3)
+    ax3.set_title("Age Distribution")
+    st.pyplot(fig3)
+
+with col4:
+    fig4, ax4 = plt.subplots()
+    fig4.set_size_inches(5, 3)
+    sns.boxplot(data=df, x="Pclass", y="Fare", ax=ax4)
+    ax4.set_title("Fare by Class")
+    st.pyplot(fig4)
+
+# === Row 3: Age vs Survival and Correlation Heatmap ===
+st.subheader("3. Advanced Visualizations")
+
+col5, col6 = st.columns(2)
+
+with col5:
+    fig5, ax5 = plt.subplots()
+    fig5.set_size_inches(5, 3)
+    sns.kdeplot(data=df[df["Survived"] == 1], x="Age", hue="Sex", fill=True, ax=ax5)
+    ax5.set_title("Survivors by Age & Gender")
+    st.pyplot(fig5)
+
+with col6:
+    fig6, ax6 = plt.subplots()
+    fig6.set_size_inches(5, 3)
+    sns.heatmap(df.corr(numeric_only=True), annot=True, cmap="coolwarm", ax=ax6)
+    ax6.set_title("Correlation Heatmap")
+    st.pyplot(fig6)
 
 # Footer
 st.markdown("---")
