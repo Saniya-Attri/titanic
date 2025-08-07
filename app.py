@@ -34,3 +34,4 @@ st.subheader("Survival Count by Gender")
 fig, ax = plt.subplots()
 sns.countplot(data=filtered_df, x="Survived", hue="Sex", ax=ax)
 st.pyplot(fig)
+
